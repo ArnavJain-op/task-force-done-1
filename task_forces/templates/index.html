@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Dish Selector</title>
+    <script>
+  
+        function fetchRandomDish() {
+            fetch('/random-dish')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.image) {
+                        const dishImage = document.getElementById('dishImage');
+                        dishImage.src = '/static/' + data.image;
+                        dishImage.style.display = 'block';
+                    } else if (data.error) {
+                        alert(data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching random dish:', error);
+                });
+        }
+    </script>
+</head>
+<body>
+    <h1>Welcome to the Random Dish Selector</h1>
+    <button onclick="fetchRandomDish()">Get Random Dish</button>
+    <br><br>
+    <img id="dishImage" alt="Random Dish Image" style="max-width: 400px;" src="../static/">
+</body>
+</html>
